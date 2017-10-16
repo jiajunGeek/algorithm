@@ -135,3 +135,92 @@ public class Solution {
     }
 }
 ```
+
+### 题目：从上往下打印出二叉树的每个节点，同层节点从左至右打印
+
+### 思路：经典的广度遍历，用一个队列辅助
+
+```
+public class Solution {
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        if(root==null){
+            return list;
+        }
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode treeNode = queue.poll();
+            if (treeNode.left != null) {
+                queue.offer(treeNode.left);
+            }
+            if (treeNode.right != null) {
+                queue.offer(treeNode.right);
+            }
+            list.add(treeNode.val);
+        }
+        return list;
+    }
+}
+
+```
+
+
+### 题目：输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+
+### 思路：先清楚二叉搜素数的概念，如果左子树不为空，则左子树上所有的节点都小于根节点，如果右子树不为空，则右子树所有节点都大于根节点。树的问题用递归往往容易解决。首先找到根节点，然后找到比根节点小的位置，那么这个位置到根节点的就是右子树，左边的就是左子树，然后递归执行下去就行。
+
+```
+public class Solution {
+    public boolean VerifySquenceOfBST(int [] sequence) {
+        if(sequence.length==0)
+            return false;
+        if(sequence.length==1)
+            return true;
+        return ju(sequence, 0, sequence.length-1);
+         
+    }
+     
+    public boolean ju(int[] a,int star,int root){
+        if(star>=root)
+            return true;
+        int i = root;
+        //从后面开始找
+        while(i>star&&a[i-1]>a[root])
+            i--;//找到比根小的坐标
+        //从前面开始找 star到i-1应该比根小
+        for(int j = star;j<i-1;j++)
+            if(a[j]>a[root])
+                return false;;
+        return ju(a,star,i-1)&&ju(a, i, root-1);
+    }
+}
+```
+
+
+### 题目：输入一颗二叉树和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+
+
+### 思路：本题采用深搜。从根节点到出发，有两条路可走，走左边和走右边，分别进行遍历。
+```
+
+public class Solution {
+    private ArrayList<ArrayList<Integer>> listAll = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<Integer> list = new ArrayList<Integer>();
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int target) {
+        if(root == null) return listAll;
+        list.add(root.val);
+        target -= root.val;
+        //判断是否符合
+        if(target == 0 && root.left == null && root.right == null)
+            listAll.add(new ArrayList<Integer>(list));
+        //不符合的话，向左走
+        FindPath(root.left, target);
+        //向右走
+        FindPath(root.right, target);
+        //退回一步
+        list.remove(list.size()-1);
+        return listAll;
+    }
+}
+```
