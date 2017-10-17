@@ -224,3 +224,86 @@ public class Solution {
     }
 }
 ```
+
+### 题目：输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
+
+### 思路：用递归解就可以，注意去重的问题，可以用hashset来去重。
+
+
+```
+import java.util.*;
+public class Solution {
+    public ArrayList<String> Permutation(String A) {
+        // write code here
+        
+        
+        ArrayList<String> list = new ArrayList<>();
+        if(A.length()==0)
+            return list;
+		permutation(list, A.toCharArray(), 0);
+        HashSet set=new HashSet(list);
+        list=new ArrayList(set);
+        Collections.sort(list);
+        
+        
+        return list;
+    }
+     
+    public void permutation(ArrayList<String> list, char[] array, int k) {
+        if(k == array.length) {
+            list.add(new String(array));
+            return ;
+        }
+        //核心代码
+        for(int i = k; i < array.length; i++) {
+            swap(array, i, k);
+            permutation(list, array, k + 1);
+            swap(array, i, k);
+        }
+    }
+     
+    public void swap(char[] array, int i, int j) {
+        if(i != j) {
+            char temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+    }
+    
+}
+```
+
+
+
+### 题目：数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
+
+### 思路：用一个辅助的hashmap，键为数组元素，数组为次数。这样的话从头开始遍历，put进map里面，最后进行看map里面那个键对应的值超过数组长度一半
+
+```
+
+
+public class Solution {
+    public int MoreThanHalfNum_Solution(int [] array) {
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+         
+        for(int i=0;i<array.length;i++){
+             
+            if(!map.containsKey(array[i])){
+               map.put(array[i],1);
+            }else{
+                int count = map.get(array[i]);
+                map.put(array[i],++count);
+            }
+        }
+        Iterator iter = map.entrySet().iterator();
+        while(iter.hasNext()){
+            Map.Entry entry = (Map.Entry)iter.next();
+            Integer key =(Integer)entry.getKey();
+            Integer val = (Integer)entry.getValue();
+            if(val>array.length/2){
+                return key;
+            }
+        }
+        return 0;
+}
+```
