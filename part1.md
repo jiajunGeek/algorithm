@@ -307,3 +307,72 @@ public class Solution {
         return 0;
 }
 ```
+
+
+### 题目：输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
+
+### 思路：冒泡实现的是取出最小的n个数，所以将第二重循环改成k就行
+
+
+```
+public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+        ArrayList<Integer> al = new ArrayList<Integer>();
+        if (k > input.length) {
+            return al;
+        }
+        for (int i = 0; i < k; i++) {
+            for (int j = 0; j < input.length - i - 1; j++) {
+                if (input[j] < input[j + 1]) {
+                    int temp = input[j];
+                    input[j] = input[j + 1];
+                    input[j + 1] = temp;
+                }
+            }
+            al.add(input[input.length - i - 1]);
+        }
+        return al;
+    }
+```
+
+### 题目：HZ偶尔会拿些专业问题来忽悠那些非计算机专业的同学。今天测试组开完会后,他又发话了:在古老的一维模式识别中,常常需要计算连续子向量的最大和,当向量全为正数的时候,问题很好解决。但是,如果向量中包含负数,是否应该包含某个负数,并期望旁边的正数会弥补它呢？例如:{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止)。你会不会被他忽悠住？(子向量的长度至少是1)
+
+### 思路：从头开始遍历，tempsum表示目前连续的和，如果此时这个和是小于0的时候（没有意义），这个tempsum应该用当前的元素代替。如果不是的话，加上当前的元素，如果和比之前记录的最大值还要大的话，sum设置为当前的和
+
+
+```
+
+int FindGreatestSumOfSubArray(int array[]) {
+        if(array.length==0)return 0;
+        int sum = array[0], tempsum = array[0]; 
+        for(int i = 1; i < array.length; i++) 
+        {
+            tempsum = (tempsum < 0) ? array[i] : tempsum + array[i];
+            sum = (tempsum > sum) ? tempsum : sum;
+        }
+        return sum;
+    }
+```
+
+### 题目：求出1~13的整数中1出现的次数,并算出100~1300的整数中1出现的次数？为此他特别数了一下1~13中包含1的数字有1、10、11、12、13因此共出现6次,但是对于后面问题他就没辙了。ACMer希望你们帮帮他,并把问题更加普遍化,可以很快的求出任意非负整数区间中1出现的次数。
+
+### 思路：从1到n，将这些数添加到StringBuffer（设置好大小，可以减少空间减少时间），然后遍历这个字符串有多少个1就行了
+
+```
+
+ public int NumberOf1Between1AndN_Solution(int n) {
+        int count=0;
+        StringBuffer s=new StringBuffer();
+        for(int i=1;i<n+1;i++){
+             s.append(i);
+        }
+        String str=s.toString();
+        for(int i=0;i<str.length();i++){
+            if(str.charAt(i)=='1')
+                count++;
+        }
+        return count;
+    }
+```
+
+
+
