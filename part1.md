@@ -374,5 +374,51 @@ int FindGreatestSumOfSubArray(int array[]) {
     }
 ```
 
+### 题目：在一个字符串(1<=字符串长度<=10000，全部由字母组成)中找到第一个只出现一次的字符,并返回它的位置
+
+### 思路：用一个数组记录每个字符的字数
+
+```
+public int FirstNotRepeatingChar(String str)
+    {
+        char[] c = str.toCharArray();
+        int[] a = new int['z'+1];
+        for (char d : c)
+            a[(int) d]++;
+        for (int i = 0; i < c.length; i++)
+            if (a[(int) c[i]] == 1)
+                return i;
+        return -1;
+    }
+}
+```
 
 
+### 题目：输入两个链表，找出它们的第一个公共结点。
+### 思路：充分利用hashmap的特性
+
+```
+
+import java.util.HashMap;
+public class Solution {
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        ListNode current1 = pHead1;
+        ListNode current2 = pHead2;
+ 
+ 
+        HashMap<ListNode, Integer> hashMap = new HashMap<ListNode, Integer>();
+        while (current1 != null) {
+            hashMap.put(current1, null);
+            current1 = current1.next;
+        }
+        while (current2 != null) {
+            if (hashMap.containsKey(current2))
+                return current2;
+            current2 = current2.next;
+        }
+ 
+        return null;
+ 
+    }
+}
+```
