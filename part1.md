@@ -422,3 +422,83 @@ public class Solution {
     }
 }
 ```
+### 题目：统计一个数字在排序数组中出现的次数。
+
+### 思路：用二分查找该数字在数组中的位置，然后向前早最左的下标，向后找最右的下标，两个下标相减+1即为所求结果
+
+```
+public class Solution {
+    public int GetNumberOfK(int [] array , int k) {
+       int index=binarySearch(array,0,array.length-1,k);
+        if (index==-1)
+            return 0;
+        int start=searchLeft(array,index);
+        int end =searchRight(array,index);
+        return end-start+1;
+       
+    }
+    public int searchLeft(int array[],int index)
+    {
+    	    int target=array[index];
+        	while(true){
+                if(index==0)
+                    break;
+                if(array[--index]!=target){
+                    index++;
+                    break;
+                    
+                }
+            }
+        return index;
+                
+    }
+    public int searchRight(int array[],int index)
+    {
+    	    int target=array[index];
+        	while(true){
+                if(index==array.length-1)
+                    break;
+                if(array[++index]!=target){
+                    index--;
+                    break;
+                    
+                }
+            }
+        return index;
+    }
+    public int binarySearch(int array[],int start,int end,int target)
+    {
+    	    if(start>end)
+                return -1;
+        	int index=(start+end)/2;
+        	if(array[index]>target){
+                return binarySearch(array,start,index-1,target);
+            }
+        	else{
+                if(array[index]==target)
+                    return index;
+                return binarySearch(array,index+1,end,target);
+            }
+                
+    
+    }
+}
+```
+
+
+### 题目：输入一棵二叉树，求该树的深度。从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，最长路径的长度为树的深度。
+
+### 思路：递归深度遍历
+
+```
+public class Solution {
+    public int TreeDepth(TreeNode pRoot)
+    {
+        return pRoot == null? 0 : Math.max(TreeDepth(pRoot.left),TreeDepth(pRoot.right)) + 1;
+    }
+}
+```
+
+
+
+
