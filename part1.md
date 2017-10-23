@@ -500,5 +500,67 @@ public class Solution {
 ```
 
 
+### 题目：输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+
+### 思路：二叉树有很好的特点，就是大多可以用递归解决，而递归的好处就是思路清晰
+
+```
+
+public class Solution {
+    //后续遍历时，遍历到一个节点，其左右子树已经遍历  依次自底向上判断，每个节点只需要遍历一次
+     
+    private boolean isBalanced=true;
+    public boolean IsBalanced_Solution(TreeNode root) {
+         
+        getDepth(root);
+        return isBalanced;
+    }
+    public int getDepth(TreeNode root){
+        if(root==null)
+            return 0;
+        int left=getDepth(root.left);
+        int right=getDepth(root.right);
+         
+        if(Math.abs(left-right)>1){
+            isBalanced=false;
+        }
+        return right>left ?right+1:left+1;
+         
+    }
+}
+```
+
+### 题目:小明很喜欢数学,有一天他在做数学作业时,要求计算出9~16的和,他马上就写出了正确答案是100。但是他并不满足于此,他在想究竟有多少种连续的正数序列的和为100(至少包括两个数)。没多久,他就得到另一组连续正数和为100的序列:18,19,20,21,22。现在把问题交给你,你能不能也很快的找出所有和为S的连续正数序列? Good Luck! 
 
 
+### 思路：巧妙利用等差树列的性质，对每一个可能连续序列长度的进行遍历，判断这个长度下的连续序列是否存在
+
+```
+
+
+import java.util.ArrayList;
+public class Solution {
+        public ArrayList<ArrayList<Integer> > FindContinuousSequence(int sum) {
+            ArrayList<ArrayList<Integer>>list=new ArrayList<ArrayList<Integer>>();
+            if(sum<3)return list;
+            int s=(int) Math.sqrt(2*sum);
+            for(int i=s;i>=2;i--)
+                {
+                    if(2*sum%i==0)
+                        {
+                            int d=2*sum/i;
+                            if(d%2==0&&i%2!=0||d%2!=0&&i%2==0)
+                                {
+                                    int a1=(d-i+1)/2;
+                                    int an=(d+i-1)/2;
+                                    ArrayList<Integer>temp=new ArrayList<Integer>();
+                                    for(int j=a1;j<=an;j++)
+                                        temp.add(j);
+                                    list.add(temp);
+                                }
+                        }
+                }
+            return list;
+        }
+}
+```
