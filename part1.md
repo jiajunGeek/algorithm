@@ -564,3 +564,67 @@ public class Solution {
         }
 }
 ```
+
+### 题目：输入一个递增排序的数组和一个数字S，在数组中查找两个数，是的他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。
+
+### 思路：设置一个头指针，一个尾指针，向中间靠拢
+
+```
+import java.util.ArrayList;
+public class Solution {
+    public ArrayList<Integer> FindNumbersWithSum(int [] array,int sum) {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        if (array == null || array.length < 2) {
+            return list;
+        }
+        int i=0,j=array.length-1;
+        while(i<j){
+            if(array[i]+array[j]==sum){
+            list.add(array[i]);
+            list.add(array[j]);
+                return list;
+           }else if(array[i]+array[j]>sum){
+                j--;
+            }else{
+                i++;
+            }
+             
+        }
+        return list;
+    }
+}
+```
+
+### 题目：汇编语言中有一种移位指令叫做循环左移（ROL），现在有个简单的任务，就是用字符串模拟这个指令的运算结果。对于一个给定的字符序列S，请你把其循环左移K位后的序列输出。例如，字符序列S=”abcXYZdef”,要求输出循环左移3位后的结果，即“XYZdefabc”。是不是很简单？OK，搞定它！
+
+### 思路：用api很轻松就可以得出答案。另一种方法，左边反转，右边反转，然后整个进行反转，最后得出结果
+
+```
+public String LeftRotateString(String str,int n) {
+        return n<=str.length()?str.substring(n)+str.substring(0, n):"";
+    }
+```
+
+### 题目：牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，写些句子在本子上。同事Cat对Fish写的内容颇感兴趣，有一天他向Fish借来翻看，但却读不懂它的意思。例如，“student. a am I”。后来才意识到，这家伙原来把句子单词的顺序翻转了，正确的句子应该是“I am a student.”。Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？
+
+### 思路：spilt成多个字符串，然后从后往前拼接起来就行。或者将每个单词反转，然后整个整个反转
+
+```
+public class Solution {
+    public String ReverseSentence(String str) {
+        if(str.trim().equals("")){
+            return str;
+        }
+        String[] a = str.split(" ");
+        StringBuffer o = new StringBuffer();
+        int i;
+        for (i = a.length; i >0;i--){
+            o.append(a[i-1]);
+            if(i > 1){
+                o.append(" ");
+            }
+        }
+        return o.toString();
+    }
+}
+```
