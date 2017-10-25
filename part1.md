@@ -628,3 +628,49 @@ public class Solution {
     }
 }
 ```
+
+### 题目：在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。
+
+### 思路：用一个boolean数组来标志是否已经访问过，如果已经访问过，返回true
+
+```
+
+    public boolean duplicate(int numbers[], int length, int[] duplication) {
+        boolean[] k = new boolean[length];
+        for (int i = 0; i < k.length; i++) {
+            if (k[numbers[i]] == true) {
+                duplication[0] = numbers[i];
+                return true;
+            }
+            k[numbers[i]] = true;
+        }
+        return false;
+    }
+```
+
+### 题目：给定一个数组A[0,1,...,n-1],请构建一个数组B[0,1,...,n-1],其中B中的元素B[i]=A[0]*A[1]*...*A[i-1]*A[i+1]*...*A[n-1]。不能使用除法。
+
+### 思路：可以画出一个矩形，然后先计算下三角的连乘积，然后计算上三角的连乘积，和之前同一行的下三角部分相乘
+
+```
+public class Solution {
+    public int[] multiply(int[] A) {
+        int length = A.length;
+        int[] B = new int[length];
+        if(length != 0 ){
+            B[0] = 1;
+            //计算下三角连乘
+            for(int i = 1; i < length; i++){
+                B[i] = B[i-1] * A[i-1];
+            }
+            int temp = 1;
+            //计算上三角
+            for(int j = length-2; j >= 0; j--){
+                temp *= A[j+1];
+                B[j] *= temp;
+            }
+        }
+        return B;
+    }
+}
+```
