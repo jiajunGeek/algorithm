@@ -724,3 +724,84 @@ public class Solution
     }
 }
 ```
+
+### 题目：一个链表中包含环，请找出该链表的环的入口结点。
+
+### 思路：求出环中节点的数目，然后设置两个指针，一个指针先走n步，然后另一个才开始，当两个指针指向的节点相同时，说明这个是入口节点
+
+```
+public class Solution {
+    //找到一快一满指针相遇处的节点，相遇的节点一定是在环中
+    public static ListNode meetingNode(ListNode head) {
+        if(head==null)
+            return null;
+         
+        ListNode slow = head.next;
+        if(slow==null)
+            return null;
+         
+        ListNode fast = slow.next;
+        while (slow != null && fast != null) {
+            if(slow==fast){
+                return fast;
+            }
+            slow=slow.next;
+            fast=fast.next;
+             
+            if(fast!=slow){
+                fast=fast.next;
+            }
+        }
+        return null;
+    }
+    public ListNode EntryNodeOfLoop(ListNode pHead) {
+        ListNode meetingNode=meetingNode(pHead);
+        if(meetingNode==null)
+            return null;
+//      得到环中的节点个数
+        int nodesInLoop=1;
+        ListNode p1=meetingNode;
+        while(p1.next!=meetingNode){
+            p1=p1.next;
+            ++nodesInLoop;
+        }
+//      移动p1
+        p1=pHead;
+        for(int i=0;i<nodesInLoop;i++){
+            p1=p1.next;
+        }
+//      移动p1，p2
+        ListNode p2=pHead;
+        while(p1!=p2){
+            p1=p1.next;
+            p2=p2.next;
+        }
+        return p1;
+    }
+}
+```
+
+### 题目：给定一颗二叉搜索树，请找出其中的第k大的结点。例如， 5 / \ 3 7 /\ /\ 2 4 6 8 中，按结点数值大小顺序第三个结点的值为4。
+
+### 思路：首先知道什么是二叉搜索树，就是左边的小于根节点，右边的大于根节点，而二叉搜索树的中序遍历刚好是从小到大的顺序
+
+```
+public class Solution {
+   int index = 0; //计数器
+    TreeNode KthNode(TreeNode root, int k)
+    {
+        if(root != null){ //中序遍历寻找第k个
+            TreeNode node = KthNode(root.left,k);
+            if(node != null)
+                return node;
+            index ++;
+            if(index == k)
+                return root;
+            node = KthNode(root.right,k);
+            if(node != null)
+                return node;
+        }
+        return null;
+    }
+}
+```
