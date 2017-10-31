@@ -39,7 +39,7 @@ public boolean wordBreak(String s, Set<String> dict) {
 ### 题目：n个小朋友站成一排，根据他们的得分分发糖果，得分高的小朋友要比旁边得分低的小朋友得到的糖果多，每个小朋友至少得到一枚糖果，问最少要准备多少糖果？
 
 ### 思路：
-先从左到右扫描一遍，使得右边比左边得分高的小朋友糖果数比左边多1(尽可能的少)
+先从左到右扫描一遍，使得右边比左边得分高的小朋友糖果数比左边多1(尽可能的少)；
 再从右到左扫描一遍，使得左边比右边得分高的小朋友糖果数比右边多（这里要注意，从右向左比较时，只有当左边小朋友比右边的分高且得到的糖果少于等于右边时，b[i]=b[i+1]+1;否则不更新b[i]。）
 
 ```
@@ -113,4 +113,34 @@ public class Solution {
         return cutNum[n - 1];  
     }  
 }  
+```
+### 题目：Given a string S and a string T, count the number of distinct subsequences of T in S.
+A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ACE" is a subsequence of "ABCDE" while "AEC" is not).
+Here is an example:
+S = "rabbbit", T = "rabbit"
+Return 3.
+
+### 思路：题目的意思是在s中找有几种和T一样的字串
+
+
+```
+public class Solution {
+    public int numDistinct(String s, String t) {
+        int n = s.length(), m = t.length();
+        int[][] dp = new int[m+1][n+1];
+        for(int j = 0; j < n; j++){
+            dp[0][j] = 1;
+        }
+        for(int i = 1; i < m+1; i++){
+            for(int j = 1; j < n+1; j++){
+                if(s.charAt(j-1)==t.charAt(i-1)){
+                    dp[i][j] = dp[i-1][j-1]+dp[i][j-1];
+                } else {
+                    dp[i][j] = dp[i][j-1];
+                }
+            }
+        }
+        return dp[m][n];
+    }
+}
 ```
