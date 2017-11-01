@@ -144,3 +144,51 @@ public class Solution {
     }
 }
 ```
+
+### 题目：Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.For example, given s = "leetcode", dict = ["leet", "code"].Return true because "leetcode" can be segmented as "leet code".
+
+### 思路：创建一个boolean数组dp，dp[i]为true表示i后面的字符串可以分割成指定的字符串，如果dp[0]为true表示这个这个字符串可以分割
+
+```
+public class Solution {
+    public boolean wordBreak(String s, Set<String> wordDict) {
+        boolean[] dp = new boolean[s.length()+1];
+        Arrays.fill(dp,false);
+        dp[s.length()]=true;
+        // 外层循环递增长度
+        for(int i = s.length()-1; i >=0 ; i--){
+            // 内层循环寻找分割点
+            for(int j = i; j < s.length(); j++){
+                String sub = s.substring(i,j+1);
+                if(wordDict.contains(sub) && dp[j+1]){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[0];
+    }
+}
+```
+
+
+### 题目：A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).How many possible unique paths are there?
+
+### 思路：找出状态转移方程：dp[i][j]=dp[i-1][j]+dp[i][j-1],降成一维结果如下
+
+```
+public int uniquePaths(int m, int n) {  
+    if(m<=0 || n<=0)  
+        return 0;  
+    int[] res = new int[n];  
+    res[0] = 1;  
+    for(int i=0;i<m;i++)  
+    {  
+        for(int j=1;j<n;j++)  
+        {  
+           res[j] += res[j-1];  
+        }  
+    }  
+    return res[n-1];  
+}  
+```
