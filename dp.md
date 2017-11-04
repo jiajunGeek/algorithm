@@ -1,4 +1,4 @@
-### 题目：Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+﻿### 题目：Given a string s and a dictionary of words dict, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
 ```
 For example, given
 s = "leetcode",
@@ -300,4 +300,36 @@ public int numDecodings(String s) {
   
         return dp[0];  
     }  
+```
+
+
+## 题目：Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
+
+You have the following 3 operations permitted on a word:
+
+a) Insert a character
+b) Delete a character
+c) Replace a character
+
+```
+public class Solution {
+    int minDistance(String word1, String word2) {
+        int n1 = word1.length(), n2 = word2.length();
+        char []w1=word1.toCharArray();
+        char []w2=word2.toCharArray();
+        int dp[][]=new int [n1 + 1][n2 + 1];
+        for (int i = 0; i <= n1; ++i) dp[i][0] = i;
+        for (int i = 0; i <= n2; ++i) dp[0][i] = i;
+        for (int i = 1; i <= n1; ++i) {
+            for (int j = 1; j <= n2; ++j) {
+                if (w1[i - 1] == w2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1;
+                }
+            }
+        }
+        return dp[n1][n2];
+    }
+}
 ```
