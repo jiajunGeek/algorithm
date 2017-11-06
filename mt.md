@@ -113,3 +113,87 @@ public int countPath(int[][] map, int n, int m) {
     return dp[x2][y2];
 }
 ```
+
+
+
+### 有一个直方图，用一个整数数组表示，其中每列的宽度为1，求所给直方图包含的最大矩形面积。比如，对于直方图[2,7,9,4],它所包含的最大矩形的面积为14(即[7,9]包涵的7x2的矩形)。给定一个直方图A及它的总宽度n，请返回最大矩形面积。保证直方图宽度小于等于500。保证结果在int范围内。
+
+```
+ public int countArea(int[] A, int n) {
+        if (A==null){
+            return 0;
+        }
+        int dp[][]=new int[n][n];
+        //赋值初值
+        for (int i = 0; i < n; i++) {
+            dp[i][i]=A[i];
+        }
+        for (int k = 1; k <=n ; k++) {
+            for (int i = 0; (i+k) <n ; i++) {
+                //先算出最小值
+                int min=A[i];
+                for (int j = i+1; j <= i+k; ++j) {
+                    min = Math.min(min, A[j]);
+                }
+                dp[i][i+k]=Math.max(dp[i][i+k-1], dp[i+1][i + k]);
+                dp[i][i+k]=Math.max(min*(k+1),dp[i][i+k]);
+            }
+        }
+        return dp[0][n-1];
+    }
+```
+
+
+### 求字典序在s1和s2之间的，长度在len1到len2的字符串的个数，结果mod 1000007。
+
+```
+public static void main(String[] args) {
+        // TODO Auto-generated method stub
+        Scanner scan = new Scanner(System.in);
+//      String t[] = "a   b c".split(" ");
+//      System.out.println((int)(0.6)+t.length);
+        while(scan.hasNextLine()){
+            String inputString[] = scan.nextLine().split(" ");
+            System.out.println(getStrCount(inputString[0],inputString[1],Integer.parseInt(inputString[2]),Integer.parseInt(inputString[3])));
+            //          System.out.println(scan.nextLine()+"@");
+        }
+
+
+    }
+    /***
+     * 求字典序在s1和s2之间的，长度在len1到len2的字符串的个数，结果mod 1000007。
+     * @param str1 字符串s1
+     * @param str2 字符串s2
+     * @param len1 长度len1
+     * @param len2 长度len1
+     * @return 长度在len1到len2的字符串的个数，结果mod 1000007
+     */
+    public static long getStrCount(String str1,String str2,int len1,int len2){
+//      System.out.println(str1+" "+ str2+" "+len1+" "+len2);
+        long sum = 0;
+        char a[] = str1.toCharArray();
+        char b[] = str2.toCharArray();
+        int i = len1;
+        for(i = len1; i <= len2; i++){//长度从len1 到len2，共有len2-len1种情况
+            char a1 = a[0];
+            char b1 = b[0];
+            int t = b1 - a1;//两者的差值
+            sum = sum + t * (long)Math.pow(26, i - 1);//先比较高位的差值，记得乘以26的i-1次幂
+            long suma = 0,sumb = 0;//用于统计a[1]~a[i]的个数和b[1]~b[i]的个数，例a[1]-a[3] = abc 则每一位的个数分别为 123即a[1]-'a'-1=1,a[2]-'a'-1=2,a[3]-'a'-1=3
+            int j = 1;
+            int min = a.length > i ? i : a.length;
+            for(j = 1; j < min; j++ ){
+                t = a[j] - 'a' + 1;//算出其字典序的位置，所以是要剪掉'a'但还要加上一个1，例a的字典序为1，b的字典序为2
+                suma = suma + t * (long)Math.pow(26, i - 1 - j);
+            }
+            min = b.length > i ? i : b.length;
+            for(j = 1; j < min; j++ ){
+                t = b[j] - 'a' + 1;
+                sumb = sumb + t * (long)Math.pow(26, i - 1 - j);
+            }
+            sum = sum + sumb - suma;//sumb - suma 即剪掉a、b两个字符串从b[1]~b[i]的所有字符串的情况-a[1]~a[i]的所有字符串的情况即两者之间的字符串个数        
+        }
+        sum = sum - 1;//在计算最后一位的时候把字符串str2也包含进去了，所以要减去一个1，即题目给的例子计算ce的时候把ce计算进去了（b[1]-'a'+1的时候），所以要减掉一个1
+        return sum % 1000007;
+    }
+```
