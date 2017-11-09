@@ -210,3 +210,29 @@ public static void main(String[] args) {
       }
 
 ```
+
+### 有一个二维数组(n*n),写程序实现从右上角到左下角沿主对角线方向打印。给定一个二位数组arr及题目中的参数n，请返回结果数组。
+
+```
+public int[] arrayPrint(int[][] arr, int n) {
+        int res[]=new int [n*n];
+        int index=0;
+        int startX=0;
+        int startY=n-1;
+        while(startX<n)
+        {
+            int x=startX;
+            int y=startY;
+            while(x<n&&y<n)
+            {
+                res[index++]=arr[x++][y++]; 0 2 1 3
+                if(startY>0)
+                    startY--;
+                else
+                    startX++;
+            }
+        }
+        return res;
+
+    }
+```
