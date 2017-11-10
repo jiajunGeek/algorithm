@@ -236,3 +236,32 @@ public int[] arrayPrint(int[][] arr, int n) {
 
     }
 ```
+
+
+### 奇位数丢弃
+
+```
+public static void main(String[] args)
+{
+    Scanner sc=new Scanner(System.in);
+    while(sc.hasNext())
+    {
+        int n=sc.nextInt();
+        List<Integer> list=new ArrayList<Integer>();
+        for(int i=0;i<=n;i++)
+        {
+            list.add(i);
+        }
+        while(list.size()!=1)
+        {
+            for(int i=0;i<list.size();i=i+1)
+                list.remove(i);
+        }
+        System.out.println(list.get(0))
+    }
+}
+//用链表更加
+
+
+
+```
