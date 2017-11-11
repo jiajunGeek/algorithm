@@ -265,3 +265,38 @@ public static void main(String[] args)
 
 
 ```
+
+### 在股市的交易日中，假设最多可进行两次买卖(即买和卖的次数均小于等于2)，规则是必须一笔成交后进行另一笔(即买-卖-买-卖的顺序进行)。给出一天中的股票变化序列，请写一个程序计算一天可以获得的最大收益。请采用实践复杂度低的方法实现。
+
+
+```
+import java.util.*;
+
+public class Stock {
+    //分别得出以i点为分割点，左半段最大收益的数组left，和右半段最大收益的数组right后.
+//我们就可以遍历一遍这两个数组，找出最大的left+right组合。
+public int maxProfit(int[] prices, int n) {
+    if (n==0){ return 0; }
+    int[] left = new int[n];
+    int[] right= new int[n];
+    int leftMin=prices[0];
+    int rightMax=prices[n-1];
+    int sum = 0;
+//prices[0]到prices[i]的最大收益应该:
+// 当前卖出能获得的最大收益 和 prices[0]到prices[i-1]的最大收益中
+// 二者较大的那个。
+    for(int i = 1 ; i<n ; i++){
+        leftMin = Math.min(prices[i],leftMin);
+        left[i] = Math.max(prices[i]-leftMin , left[i-1]);
+    }
+    for(int i = n-2 ; i>=0 ;i--){
+        rightMax = Math.max(prices[i],rightMax);
+        right[i] = Math.max(rightMax-prices[i] , right[i+1]);
+    }
+    for(int i = 0 ;i<n ;i++){
+        if((left[i]+right[i])>sum) sum = left[i]+right[i];
+    }
+        return sum;
+    }
+}
+```
