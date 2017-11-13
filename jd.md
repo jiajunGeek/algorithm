@@ -44,3 +44,85 @@ public class Balls {
 }
 
 ```
+
+### 果园里有一堆苹果，一共n头(n大于1小于9)熊来分，第一头为小东，它把苹果均分n份后，多出了一个，它扔掉了这一个，拿走了自己的一份苹果，接着第二头熊重复这一过程，即先均分n份，扔掉一个然后拿走一份，以此类推直到最后一头熊都是这样(最后一头熊扔掉后可以拿走0个，也算是n份均分)。问最初这堆苹果最少有多少个
+
+```
+import java.util.*;
+public int getInitial(int n) {
+        //return n*n-n+1;
+        for (int i = 1; i < Integer.MAX_VALUE; i++) {
+            int count = i;
+            boolean flag = false;
+            for (int j = 1; j <= n; j++) {
+                count--;
+                if (count % n == 0){
+                    count = count / n *(n-1);
+                } else {
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag){
+                return i;
+            }
+        }
+        return 0;
+    }
+```
+
+### 上台阶
+
+```
+import java.util.*;
+
+public class GoUpstairs {
+
+public int countWays(int n) {
+ 
+    int[] dp = new int[n+1];
+    dp[0] = 0;
+    dp[1] = 1;
+ 
+    for (int i = 2; i <= n; i++) {
+        dp[i] = (dp[i-1] + dp[i-2]) % 1000000007;
+    }
+    return dp[n];
+}
+}
+```
+
+
+### 给你两个集合，要求{A} + {B}。 注：同一个集合中不会有两个相同的元素。
+
+```
+import java.util.*;
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Scanner sc=new Scanner(System.in);
+        int l1=sc.nextInt();
+        int l2=sc.nextInt();
+        int array1[]=new int[l1];
+        int array2[]=new int[l2];
+        TreeSet <Integer>set=new TreeSet();
+        for(int i=0;i<l1;i++)
+        {
+           set.add(sc.nextInt());
+        }
+        for(int i=0;i<l2;i++)
+        {
+            set.add(sc.nextInt());
+        }
+        StringBuffer sb=new StringBuffer();
+        for(Iterator iter = set.iterator(); iter.hasNext(); ) { 
+    		sb.append(iter.next());
+            sb.append(" ");
+            
+		}
+        sb.delete(sb.length()-1, sb.length());
+        System.out.println(sb.toString());
+    }
+}
+```
