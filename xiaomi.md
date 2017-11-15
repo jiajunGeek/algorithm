@@ -34,7 +34,7 @@ public int calculateMax(int[] prices) {
 	int max=0;
 	for(int i=1;i<len;i++){
 		if(prices[i]<min)
-	min=prices[i];
+	        min=prices[i];
 	if(prices[i]-min>max)
 		max=prices[i]-min;
 	left[i]=max;
@@ -57,5 +57,31 @@ public int calculateMax(int[] prices) {
 	}
 	return result;
 	}
+}
+```
+
+
+
+### 给定一个句子（只包含字母和空格）， 将句子中的单词位置反转，单词用空格分割, 单词之间只有一个空格，前后没有空格。 比如： （1） “hello xiao mi”-> “mi xiao hello”
+
+```
+import java.util.*;
+public class Main
+{
+    public static void main(String[] args)
+    {
+        Scanner in=new Scanner(System.in);
+        String s=in.nextLine();
+        StringBuffer sb=new StringBuffer(s);
+        s=sb.reverse().toString();
+        String [] list=s.split(" ");
+        s="";
+        for(int n=0;n<list.length;n++)
+        {
+            s=s+new StringBuffer(list[n]).reverse().toString()+" ";
+        }
+        s=s.substring(0,(s.length()-1));
+        System.out.println(s);
+    }
 }
 ```
