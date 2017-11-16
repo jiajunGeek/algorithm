@@ -1,4 +1,4 @@
-### 题目：在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+﻿### 题目：在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 
 ### 思路：抓住重要的一点，右上方的那一个点，向下是变大，向左是变小
 
@@ -802,6 +802,85 @@ public class Solution {
                 return node;
         }
         return null;
+    }
+}
+```
+
+
+
+### 一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
+
+
+```
+//num1,num2分别为长度为1的数组。传出参数
+//将num1[0],num2[0]设置为返回结果
+
+import java.util.*;
+public class Solution {
+    public void FindNumsAppearOnce(int [] array,int num1[] , int num2[]) {
+        HashMap <Integer,Integer>hashmap=new HashMap();
+        for(int n=0;n<array.length;n++)
+        {
+            if(hashmap.containsKey(array[n]))
+            {
+                hashmap.put(array[n],2);
+            }
+            else
+            	hashmap.put(array[n],1);
+        }
+        Iterator it=hashmap.keySet().iterator();
+        int i=0;
+        while(it.hasNext())
+        {
+            int key=(Integer)it.next();
+            if(hashmap.get(key)==1)
+            {
+                if(i==0)
+                {
+                    num1[0]=key;
+                    i++;
+                }
+                else
+                {
+                     num2[0]=key;
+                    break;
+                }
+                    
+            }
+        }
+    }
+}
+```
+
+
+### 把只包含因子2、3和5的数称作丑数（Ugly Number）。例如6、8都是丑数，但14不是，因为它包含因子7。 习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数。
+
+
+```
+
+public class Solution {
+    final int d[] = { 2, 3, 5 };
+    public int GetUglyNumber_Solution(int index) {
+        if(index == 0) return 0;
+        int a[] = new int[index];
+        a[0] = 1;
+        int p[] = new int[] { 0, 0, 0 };
+        int num[] = new int[] { 2, 3, 5 };
+        int cur = 1;
+ 
+        while (cur < index) {
+            int m = finMin(num[0], num[1], num[2]);
+            if (a[cur - 1] < num[m])
+                a[cur++] = num[m];
+            p[m] += 1;
+            num[m] = a[p[m]] * d[m];
+        }
+        return a[index - 1];
+    }
+ 
+    private int finMin(int num2, int num3, int num5) {
+        int min = Math.min(num2, Math.min(num3, num5));
+        return min == num2 ? 0 : min == num3 ? 1 : 2;
     }
 }
 ```
