@@ -1017,3 +1017,28 @@ public class Solution {
     }
 }
 ```
+
+### 对称的二叉树
+```
+public class Solution {
+    boolean isSymmetrical(TreeNode pRoot) {
+        if(pRoot == null){
+            return true;
+        }
+        return nodeIsSymmetrical(pRoot.left , pRoot.right);
+    }
+
+    private boolean nodeIsSymmetrical(TreeNode left, TreeNode right) {
+        if(left == null){
+            return right == null;
+        }
+        if(right == null){
+            return false;
+        }
+        if(left.val != right.val){
+            return false;
+        }
+        return nodeIsSymmetrical(left.left , right.right) && nodeIsSymmetrical(left.right , right.left);
+    }
+}
+```
