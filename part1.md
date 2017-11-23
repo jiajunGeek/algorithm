@@ -1042,3 +1042,38 @@ public class Solution {
     }
 }
 ```
+
+### 把二叉树打印成多行
+
+```
+public class Solution {
+    ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
+    	ArrayList <ArrayList<Integer>> lists=new ArrayList();
+        if(pRoot==null)
+            return lists;
+        LinkedList <TreeNode>queue=new LinkedList();
+        queue.offer(pRoot);
+        int count=1;
+        while(queue.size()!=0)
+        {
+            //遍历每一层
+            count=queue.size();
+            ArrayList <Integer> list=new ArrayList();
+            while(count!=0)
+            {
+                TreeNode node=queue.poll();
+                count--;
+                list.add(node.val);
+                if(node.left!=null)
+                    queue.offer(node.left);
+                if(node.right!=null)
+                    queue.offer(node.right);
+            
+            }
+            lists.add(list);
+        }
+        return lists;
+    }
+    
+}
+```
