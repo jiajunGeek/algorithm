@@ -1018,7 +1018,7 @@ public class Solution {
 }
 ```
 
-### 对称的二叉树
+  ### 对称的二叉树
 ```
 public class Solution {
     boolean isSymmetrical(TreeNode pRoot) {
