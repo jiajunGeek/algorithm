@@ -1113,7 +1113,7 @@ public class Solution {
             if(root1 == null && root2 != null) return false;
             if(root2 == null) return true;
             if(root1.val != root2.val) return false;
-            return DoesTree1HaveTree2(root1.left, root2.left) && DoesTree1HaveTree2(root1.right, root2.right);
+            return DoesTree1HaveTree2(root1.left, root2.left) && DoesTree1HaveTree2(root1.right, root2.right) ;
         }
 }
 ```
