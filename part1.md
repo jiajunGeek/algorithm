@@ -1,4 +1,4 @@
-﻿### 题目：在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。 
+﻿### 题目：在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 
 ### 思路：抓住重要的一点，右上方的那一个点，向下是变大，向左是变小
 
@@ -1018,7 +1018,7 @@ public class Solution {
 }
 ```
 
-  ### 对称的二叉树
+### 对称的二叉树
 ```
 public class Solution {
     boolean isSymmetrical(TreeNode pRoot) {
@@ -1090,5 +1090,30 @@ public int Sum_Solution(int n) {
         boolean ans = (n>0)&&((sum+=Sum_Solution(n-1))>0);
         return sum;
     }
+}
+```
+
+### 树的子结构
+
+```
+
+public class Solution {
+    public boolean HasSubtree(TreeNode root1,TreeNode root2) {
+        boolean result = false;
+            if(root1 != null && root2 != null){
+                if(root1.val == root2.val){
+                    result = DoesTree1HaveTree2(root1,root2);
+                }
+                if(!result){result = HasSubtree(root1.left, root2);}
+                if(!result){result = HasSubtree(root1.right, root2);}
+            }
+            return result;
+    }
+    public boolean DoesTree1HaveTree2(TreeNode root1,TreeNode root2){
+            if(root1 == null && root2 != null) return false;
+            if(root2 == null) return true;
+            if(root1.val != root2.val) return false;
+            return DoesTree1HaveTree2(root1.left, root2.left) && DoesTree1HaveTree2(root1.right, root2.right);
+        }
 }
 ```
