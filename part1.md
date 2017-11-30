@@ -1140,6 +1140,7 @@ public class Solution {
         }
     }
 }
+
 ```
 
 ### 序列化二叉树
