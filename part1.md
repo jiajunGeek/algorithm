@@ -626,7 +626,7 @@ public class Solution {
         }
         return o.toString();
     }
-} 
+}
 ```
 
 ### 题目：在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。
@@ -1140,7 +1140,6 @@ public class Solution {
         }
     }
 }
-
 ```
 
 ### 序列化二叉树
@@ -1178,4 +1177,30 @@ public class Solution {
         return node;
   }
 }
-``` ### 链表是否有环
+```
+
+### 重建二叉树
+```
+
+public class Solution {
+    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+        TreeNode root=reConstructBinaryTree(pre,0,pre.length-1,in,0,in.length-1);
+        return root;
+    }
+    //前序遍历{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}
+    private TreeNode reConstructBinaryTree(int [] pre,int startPre,int endPre,int [] in,int startIn,int endIn) {
+         
+        if(startPre>endPre||startIn>endIn)
+            return null;
+        TreeNode root=new TreeNode(pre[startPre]);
+         
+        for(int i=startIn;i<=endIn;i++)
+            if(in[i]==pre[startPre]){
+                root.left=reConstructBinaryTree(pre,startPre+1,startPre+i-startIn,in,startIn,i-1);
+                root.right=reConstructBinaryTree(pre,i-startIn+startPre+1,endPre,in,i+1,endIn);
+            }
+                 
+        return root;
+    }
+}
+```
